@@ -1,0 +1,99 @@
+a, a:hover{
+    text-decoration: none;
+}
+
+h1, ul, li{
+    margin: 0;
+}
+
+li{
+    list-style: none;
+}
+
+header, footer{
+    background: #212233;
+    padding: 10px 0;
+    color: #FFF;
+}
+
+header a, header a:hover, footer a, footer a:hover{
+    color: #FFF;
+}
+
+.lr-form{
+    background-color: #fcfcfc;
+    padding: 25px;
+    border: 1px solid #c2c2c2;
+    border-radius: 15px;
+}
+
+.prfl-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+nav ul li{
+    display: inline-block;
+}
+
+nav ul li:not(:last-child){
+    margin-right: 20px;
+}
+
+[class*="section-header"]{
+    border-top: 1px solid #c2c2c2;
+    border-bottom: 1px solid #c2c2c2;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 5px 0;
+}
+
+.section-header-todo{
+    background-color: #464D5E;
+    color: #FFF;
+}
+
+.section-header-doing{
+    background-color: #677C82;
+    color: #FFF;
+}
+
+.section-header-done{
+    background-color: #BDD9CF;
+    color: #000;
+}
+
+article[class*="card"]{
+    width: 98%;
+    transition: width 0.1s linear;
+}
+
+article[class*="card"]:hover{
+    width: 100%;
+    transition: width 0.1s linear;
+}
+
+.card-text{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+            line-clamp: 2; 
+    -webkit-box-orient: vertical;
+}
+
+@media (min-width: 768px){
+    .center-col{
+        border-left: 1px solid #c2c2c2;
+        border-right: 1px solid #c2c2c2;
+    }
+}
+
+@media (max-width: 1199px){
+    .center-col{
+        border-right: 0px;
+    }
+}
+

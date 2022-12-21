@@ -1,0 +1,51 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="row mt-5">
+    <div class="col-12 col-lg-9 offset-lg-3 ps-md-0">
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">← Back</a>
+    </div>
+</div>
+
+<div class="row mt-3 view-task">
+    <form action="" method="post" novalidate>
+            <div class="col-12 col-md-6 offset-md-3">
+            {% if frError %}<p>Error: {{ frError }}</p>{% endif %}
+                {{ frupdtask.hidden_tag() }}
+                <div class="mb-3">
+                    {{ frupdtask.title.label(class="form-label") }}
+                    {{ frupdtask.title(class="form-control") }}
+                    {% for error in frupdtask.title.errors %}
+                    <div class="form-text text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    {{ frupdtask.text.label(class="form-label") }}
+                    {{ frupdtask.text(class="form-control", rows=5) }}
+                    {% for error in frupdtask.text.errors %}
+                    <div class="form-text text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    {{ frupdtask.estimatedTime.label(class="form-label") }}
+                    {{ frupdtask.estimatedTime(class="form-control", placeholder="HH:MM") }}
+                    {% for error in frupdtask.estimatedTime.errors %}
+                    <div class="form-text text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="mb-3">
+                    {{ frupdtask.deadline.label(class="form-label") }}
+                    {{ frupdtask.deadline(class="form-control", placeholder="DD/MM/YYYY") }}
+                    {% for error in frupdtask.deadline.errors %}
+                    <div class="form-text text-danger">{{ error }}</div>
+                    {% endfor %}
+                </div>
+                <div class="form-text"><strong>All fields are required.</strong></div>
+            </div>
+            <div class="col-12 col-md-6 offset-md-3 text-end">
+                {{ frupdtask.submit(class="btn btn-primary") }}
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

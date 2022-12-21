@@ -1,0 +1,52 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-auto col-md-4 text-center lr-form">
+        <p><strong>REGISTRO DE USUARIO</strong></p>
+        {% if error %}<p>Error: {{ error }}</p>{% endif %}
+        <form action="" method="post" enctype="multipart/form-data" novalidate>
+            {{ frregister.hidden_tag() }}
+            <div class="d-block mb-3 text-start">
+                {{ frregister.name.label(class="form-label") }}
+                {{ frregister.name(size=64, class="form-control", placeholder="Nombre") }}
+                {% for error in frregister.name.errors %}
+                <span class="text-danger d-block">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="d-block mb-3 text-start">
+                {{ frregister.password.label(class="form-label") }}
+                {{ frregister.password(class="form-control", placeholder="Password") }}
+                {% for error in frregister.password.errors %}
+                <span class="text-danger d-block">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="d-block mb-3 text-start">
+                {{ frregister.mail.label(class="form-label") }}
+                {{ frregister.mail(class="form-control", placeholder="usuario@dominio.extensión") }}
+                {% for error in frregister.mail.errors %}
+                <span class="text-danger d-block">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="d-block mb-3 text-start">
+                {{ frregister.img.label(class="form-label") }}
+                {{ frregister.img(class="form-control", placeholder="usuario@dominio.extensión") }}
+                {% for error in frregister.img.errors %}
+                <span class="text-danger d-block">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="d-block mb-3">
+                {{ frregister.submit(class="btn btn-primary") }}
+            </div>
+
+            <div class="d-block">
+                <a href="login">Si ya está registrado, pulse aquí</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

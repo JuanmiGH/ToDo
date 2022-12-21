@@ -1,0 +1,33 @@
+{% extends 'layout.html' %} {% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-auto col-md-4 text-center lr-form">
+        <p><strong>LOGIN</strong></p>
+        <form action="" method="post" novalidate>
+            {{ frlogin.hidden_tag() }}
+            <div class="d-block mb-3 text-start">
+                {{ frlogin.mail.label(class="form-label") }}
+                {{ frlogin.mail(class="form-control", placeholder="usuario@dominio.extensión") }}
+                {% for error in frlogin.mail.errors %}
+                <span class="text-danger d-block">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="d-block mb-3 text-start">
+                {{ frlogin.password.label(class="form-label") }}
+                {{ frlogin.password(class="form-control", placeholder="Password") }}
+                {% for error in frlogin.password.errors %}
+                <span class="text-danger d-block">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="d-block mb-3">
+                {{ frlogin.submit(class="btn btn-primary") }}
+            </div>
+
+            <div class="d-block">
+                <a href="register">Si no está registrado, pulse aquí</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,188 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="row mt-5">
+    <div class="col-12 text-end pe-md-0">
+        <button type="button" id="btn-addTask" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#newTaskModal">New Task</button>
+    </div>
+</div>
+
+<div class="row mt-3 border-bottom">
+    {% if not taskError %}
+        <div class="col-12 col-md-6 col-lg-4">
+            <div class="row">
+                <div class="col section-header-todo">
+                    To Do
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col d-flex flex-wrap justify-content-center">
+                    {% for task in todo %}
+                        {% if not fncDeadline(task[4]) == False %}
+                        <article class="card text-bg-{{fncDeadline(task[4])}} mb-3">
+                        {% else %}
+                        <article class="card text-bg-light mb-3">
+                        {% endif %}
+                            <div class="card-header"><h5>{{task[8]}}</h5></div>
+                            <div class="card-body">
+                                <h6 class="card-title"><strong>Deadline:</strong> {{task[4]}} - Estimated time: {{task[3]}}</h6>
+                                <p class="card-text">{{task[7]}}</p>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <select class="form-select" data-id="{{task[0]}}">
+                                            <option value="none" selected>Move to:</option>
+                                            <option value="doing">Doing</option>
+                                            <option value="done">Done</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end">
+                                        <a href="/upd-task/{{task[0]}}" class="btn btn-primary">View / Edit task</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 center-col">
+            <div class="row">
+                <div class="col section-header-doing">
+                    Doing
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col d-flex flex-wrap justify-content-center">
+                    {% for task in doing %}
+                        {% if not fncDeadline(task[4]) == False %}
+                        <article class="card text-bg-{{fncDeadline(task[4])}} mb-3">
+                        {% else %}
+                        <article class="card text-bg-light mb-3">
+                        {% endif %}
+                            <div class="card-header"><h5>{{task[8]}}</h5></div>
+                            <div class="card-body">
+                                <h6 class="card-title"><strong>Deadline:</strong> {{task[4]}} - Estimated time: {{task[3]}}</h6>
+                                <p class="card-text">{{task[7]}}</p>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <select class="form-select" data-id="{{task[0]}}">
+                                            <option value="none" selected>Move to:</option>
+                                            <option value="todo">To Do</option>
+                                            <option value="done">Done</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end">
+                                        <a href="/upd-task/{{task[0]}}" class="btn btn-primary">View / Edit task</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-4">
+            <div class="row">
+                <div class="col section-header-done">
+                    Done
+                </div>
+            </div>
+            <div class="row mt-3 mb-3">
+                <div class="col d-flex flex-wrap justify-content-center">
+                    {% for task in done %}
+                        {% if not fncDeadline(task[4]) == False %}
+                        <article class="card text-bg-{{fncDeadline(task[4])}} mb-3">
+                        {% else %}
+                        <article class="card text-bg-light mb-3">
+                        {% endif %}
+                            <div class="card-header"><h5>{{task[8]}}</h5></div>
+                            <div class="card-body">
+                                <h6 class="card-title"><strong>Deadline:</strong> {{task[4]}} - Estimated time: {{task[3]}}</h6>
+                                <p class="card-text">{{task[7]}}</p>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <select class="form-select" data-id="{{task[0]}}">
+                                            <option value="none" selected>Move to:</option>
+                                            <option value="todo">To Do</option>
+                                            <option value="doing">Doing</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end">
+                                        <a href="/upd-task/{{task[0]}}" class="btn btn-primary">View / Edit task</a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-12">
+            Error: {{taskError}}
+        </div>
+    {% endif %}
+</div>
+
+<!-- NEW TASK MODAL -->
+<div class="modal fade" id="newTaskModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="newTaskModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="newTaskModalTitle">Add new task</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/" method="post" novalidate>
+                <div class="modal-body">
+                    {% if frError %}<p>Error: Check the red warnings below the inputs</p>{% endif %}
+                        {{ fraddtask.hidden_tag() }}
+                        <div class="mb-3">
+                            {{ fraddtask.title.label(class="form-label") }}
+                            {{ fraddtask.title(class="form-control") }}
+                            {% for error in fraddtask.title.errors %}
+                            <div class="form-text text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="mb-3">
+                            {{ fraddtask.text.label(class="form-label") }}
+                            {{ fraddtask.text(class="form-control") }}
+                            {% for error in fraddtask.text.errors %}
+                            <div class="form-text text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="mb-3">
+                            {{ fraddtask.estimatedTime.label(class="form-label") }}
+                            {{ fraddtask.estimatedTime(class="form-control", placeholder="HH:MM") }}
+                            {% for error in fraddtask.estimatedTime.errors %}
+                            <div class="form-text text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="mb-3">
+                            {{ fraddtask.deadline.label(class="form-label") }}
+                            {{ fraddtask.deadline(class="form-control", placeholder="DD/MM/YYYY") }}
+                            {% for error in fraddtask.deadline.errors %}
+                            <div class="form-text text-danger">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-text"><strong>All fields are required.</strong></div>
+                </div>
+                <div class="modal-footer">
+                    {{ fraddtask.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if frError %}
+<script>
+(function(){
+    var newTaskModal = new bootstrap.Modal(document.getElementById('newTaskModal'), {})
+    newTaskModal.show()
+})();
+</script>
+{% endif %}
+
+{% endblock %}
