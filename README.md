@@ -14,6 +14,7 @@ modules/condb.py
 Dentro de la DB necesitaremos crear dos tablas: Una para los usuarios y otra para las tareas.
 
 Para los uuarios:
+
 CREATE TABLE usr(
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -23,6 +24,7 @@ CREATE TABLE usr(
 );
 
 Para las tareas:
+
 CREATE TABLE tasks(
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     propietario VARCHAR(255) NOT NULL,
